@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Navbar } from "../components/Navbar";
+import { Card } from "../components/Card";
 
 export function Home() {
   const [getData, setData] = useState([]);
@@ -25,16 +26,20 @@ export function Home() {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
+      <div className="home-container">
       {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul>
-          {getData.map((item) => (
-            <li key={item.id}>{item.title}</li>
-          ))}
-        </ul>
-      )}
+          <div className="loading-container">
+            <div className="loading"></div>
+          </div>
+        ) : (
+          <div className="card-container">
+            {getData.map((item) => (
+              <Card key={item.id} product={item} />
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 }

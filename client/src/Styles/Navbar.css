@@ -21,7 +21,18 @@
   .icon {
     width: 24px; 
     height: 24px;
-    color:#796f5e; 
+    color: #796f5e; 
   }
- 
+
+  .size-6 {
+    width: 28px; 
+    height: 28px;
+  }
   
+  .cart-button {
+    color: #796f5e; 
+  }
+  
+  .wishlist-button {
+    color: #CE5A67;
+  }
