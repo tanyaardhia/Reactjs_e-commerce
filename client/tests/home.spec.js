@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 const baseURL = "http://localhost:5173";
 
 test("Update Product Test", async ({ page }) => {
-  await page.goto(`${baseURL}/products`);
+  await page.goto(`${baseURL}/`);
 
   const productToUpdate = await page.$(".product-item:first-child");
   if (productToUpdate) {
@@ -26,7 +26,7 @@ test("Update Product Test", async ({ page }) => {
 });
 
 test("Delete Product Test", async ({ page }) => {
-  await page.goto(`${baseURL}/products`);
+  await page.goto(`${baseURL}/`);
 
   const productToDelete = await page.$(".product-item:first-child");
   if (productToDelete) {
