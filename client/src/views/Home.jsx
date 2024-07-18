@@ -4,6 +4,7 @@ import { Navbar } from "../components/Navbar";
 import { Card } from "../components/Card";
 import { AddToCart } from "./AddToCart";
 import { AddToWishlist } from "./AddToWishlist";
+import "../Styles/Home.css";
 
 export function Home() {
   const [getData, setData] = useState([]);
@@ -128,7 +129,7 @@ export function Home() {
         onWishlistClick={handleToggleWishlist}
       />
 
-      <div className="home-container">
+      <div className="home_container">
         {loading ? (
           <div className="loading-container">
             <div className="loading"></div>
