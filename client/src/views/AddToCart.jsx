@@ -29,7 +29,7 @@ export function AddToCart({
       </button>
       <h2 className="mb-5 font-bold">Shopping Cart</h2>
       {cartItems.length === 0 ? (
-        <p className="empty-cart-message">Your cart is empty</p>
+        <p>Your cart is empty</p>
       ) : (
         <>
           <ul className="cart-items-list">

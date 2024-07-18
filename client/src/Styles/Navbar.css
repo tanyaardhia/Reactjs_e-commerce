@@ -2,17 +2,20 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: #fff; /* Sesuaikan warna background sesuai kebutuhan */
-  z-index: 1000; /* Agar navbar berada di depan elemen lainnya */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Menambahkan sedikit bayangan agar terlihat */
+  background-color: #77B0AA; 
+  z-index: 1000; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem; /* Sesuaikan padding sesuai kebutuhan */
+  padding: 1rem;
 }
 
 .navbar-brand {
   font-size: 1.5rem;
+  color: #E3FEF7;
+  padding-left: 25px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .navbar-icons {

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Navbar } from "../components/Navbar";
 import { Card } from "../components/Card";
 import { AddToCart } from "./AddToCart";
+import { AddToWishlist } from "./AddToWishlist";
 
 export function Home() {
   const [getData, setData] = useState([]);
@@ -39,6 +40,7 @@ export function Home() {
         return [...prevItems, { ...product, quantity: 1 }];
       }
     });
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
   };
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -52,23 +54,36 @@ export function Home() {
   };
 
   const handleAddToWishlist = (product) => {
-    setWishlistItems((prevItems) => [...prevItems, product]);
-    setWishlistCount(wishlistCount + 1);
+    const isAlreadyInWishlist = wishlistItems.some((item) => item.id === product.id);
+  
+    console.log(isAlreadyInWishlist, "<<< product");
+    if (isAlreadyInWishlist) {
+      const updatedWishlist = wishlistItems.filter((item) => item.id !== product.id);
+
+      console.log(updatedWishlist, "<<< updated home");
+      setWishlistItems(updatedWishlist);
+      setWishlistCount((prevCount) => prevCount - 1);
+    } else {
+      setWishlistItems((prevItems) => [...prevItems, product]);
+      setWishlistCount((prevCount) => prevCount + 1);
+    }
+    localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
+    localStorage.setItem('wishlistCount', wishlistCount);
   };
 
   const handleRemoveFromCart = (productId) => {
     setCartItems((prevItems) =>
       prevItems.filter((item) => item.id !== productId)
     );
+    localStorage.setItem('cartItems', JSON.stringify(cartItems.filter(item => item.id !== productId)));
   };
 
   const handleRemoveFromWishlist = (productId) => {
-    setWishlistItems((prevItems) =>
-      prevItems.filter((item) => item.id !== productId)
-    );
-    setWishlistCount(wishlistCount - 1);
+    setWishlistItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+    setWishlistCount((prevCount) => prevCount - 1);
+    localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems.filter(item => item.id !== productId)));
+    localStorage.setItem('wishlistCount', wishlistCount - 1);
   };
-
 
   const handleToggleCart = () => {
     setIsCartOpen(!isCartOpen);
@@ -79,8 +94,17 @@ export function Home() {
   };
 
   useEffect(() => {
+    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const storedWishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
+    const storedWishlistCount = parseInt(localStorage.getItem('wishlistCount')) || 0;
+  
+    setCartItems(storedCartItems);
+    setWishlistItems(storedWishlistItems);
+    setWishlistCount(storedWishlistCount);
+  
     fetchData();
   }, []);
+  
 
   return (
     <>
@@ -116,6 +140,14 @@ export function Home() {
         onUpdateQuantity={handleUpdateQuantity}
         onClose={handleToggleCart}
       />
+      )}
+
+{isWishlistOpen && (
+        <AddToWishlist
+          wishlistItems={wishlistItems}
+          onRemoveFromWishlist={handleRemoveFromWishlist}
+          onClose={handleToggleWishlist}
+        />
       )}
     </>
   );
