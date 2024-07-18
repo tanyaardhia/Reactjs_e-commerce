@@ -40,7 +40,7 @@ export function Home() {
         return [...prevItems, { ...product, quantity: 1 }];
       }
     });
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   };
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -54,11 +54,15 @@ export function Home() {
   };
 
   const handleAddToWishlist = (product) => {
-    const isAlreadyInWishlist = wishlistItems.some((item) => item.id === product.id);
-  
+    const isAlreadyInWishlist = wishlistItems.some(
+      (item) => item.id === product.id
+    );
+
     console.log(isAlreadyInWishlist, "<<< product");
     if (isAlreadyInWishlist) {
-      const updatedWishlist = wishlistItems.filter((item) => item.id !== product.id);
+      const updatedWishlist = wishlistItems.filter(
+        (item) => item.id !== product.id
+      );
 
       console.log(updatedWishlist, "<<< updated home");
       setWishlistItems(updatedWishlist);
@@ -67,22 +71,30 @@ export function Home() {
       setWishlistItems((prevItems) => [...prevItems, product]);
       setWishlistCount((prevCount) => prevCount + 1);
     }
-    localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
-    localStorage.setItem('wishlistCount', wishlistCount);
+    localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
+    localStorage.setItem("wishlistCount", wishlistCount);
   };
 
   const handleRemoveFromCart = (productId) => {
     setCartItems((prevItems) =>
       prevItems.filter((item) => item.id !== productId)
     );
-    localStorage.setItem('cartItems', JSON.stringify(cartItems.filter(item => item.id !== productId)));
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(cartItems.filter((item) => item.id !== productId))
+    );
   };
 
   const handleRemoveFromWishlist = (productId) => {
-    setWishlistItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+    setWishlistItems((prevItems) =>
+      prevItems.filter((item) => item.id !== productId)
+    );
     setWishlistCount((prevCount) => prevCount - 1);
-    localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems.filter(item => item.id !== productId)));
-    localStorage.setItem('wishlistCount', wishlistCount - 1);
+    localStorage.setItem(
+      "wishlistItems",
+      JSON.stringify(wishlistItems.filter((item) => item.id !== productId))
+    );
+    localStorage.setItem("wishlistCount", wishlistCount - 1);
   };
 
   const handleToggleCart = () => {
@@ -94,17 +106,18 @@ export function Home() {
   };
 
   useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    const storedWishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
-    const storedWishlistCount = parseInt(localStorage.getItem('wishlistCount')) || 0;
-  
+    const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const storedWishlistItems =
+      JSON.parse(localStorage.getItem("wishlistItems")) || [];
+    const storedWishlistCount =
+      parseInt(localStorage.getItem("wishlistCount")) || 0;
+
     setCartItems(storedCartItems);
     setWishlistItems(storedWishlistItems);
     setWishlistCount(storedWishlistCount);
-  
+
     fetchData();
   }, []);
-  
 
   return (
     <>
@@ -124,10 +137,10 @@ export function Home() {
           <div className="card-container">
             {getData.map((item) => (
               <Card
-              key={item.id}
-              product={item}
-              onAddToCart={handleAddToCart}
-              onAddToWishlist={handleAddToWishlist}
+                key={item.id}
+                product={item}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
               />
             ))}
           </div>
@@ -135,14 +148,14 @@ export function Home() {
       </div>
       {isCartOpen && (
         <AddToCart
-        cartItems={cartItems}
-        onRemoveFromCart={handleRemoveFromCart}
-        onUpdateQuantity={handleUpdateQuantity}
-        onClose={handleToggleCart}
-      />
+          cartItems={cartItems}
+          onRemoveFromCart={handleRemoveFromCart}
+          onUpdateQuantity={handleUpdateQuantity}
+          onClose={handleToggleCart}
+        />
       )}
 
-{isWishlistOpen && (
+      {isWishlistOpen && (
         <AddToWishlist
           wishlistItems={wishlistItems}
           onRemoveFromWishlist={handleRemoveFromWishlist}

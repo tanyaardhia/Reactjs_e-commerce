@@ -3,7 +3,6 @@ import "../Styles/Card.css";
 
 export function Card({ product, onAddToCart, onAddToWishlist, wishlistItems  }) {
   const [isInCart, setIsInCart] = useState(false);
-  const [isInWishlist, setIsInWishlist] = useState(false);
 
   const truncatedDescription =
     product.description.length > 100
@@ -19,7 +18,6 @@ export function Card({ product, onAddToCart, onAddToWishlist, wishlistItems  }) 
   const handleAddToWishlistClick = () => {
     onAddToWishlist(product);
   };
-
 
   return (
     <div className="card-container">
